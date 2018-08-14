@@ -7,9 +7,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/jelanilyles/Research/Partilce_Simulator/main.cpp</file>
-            <file>file:/Users/jelanilyles/Research/Partilce_Simulator/Particle.h</file>
-            <file>file:/Users/jelanilyles/Research/Partilce_Simulator/Particle.cpp</file>
+            <file>file:/Users/jelanilyles/Research/ParticleSimulator/Partilce_Simulator/GridBox.cpp</file>
+            <file>file:/Users/jelanilyles/Research/ParticleSimulator/Partilce_Simulator/Particle.h</file>
+            <file>file:/Users/jelanilyles/Research/ParticleSimulator/Partilce_Simulator/GridPlane.h</file>
+            <file>file:/Users/jelanilyles/Research/ParticleSimulator/Partilce_Simulator/GridRow.h</file>
+            <file>file:/Users/jelanilyles/Research/ParticleSimulator/Partilce_Simulator/GridPlane.cpp</file>
+            <file>file:/Users/jelanilyles/Research/ParticleSimulator/Partilce_Simulator/GridRow.cpp</file>
+            <file>file:/Users/jelanilyles/Research/ParticleSimulator/Partilce_Simulator/Particle.cpp</file>
+            <file>file:/Users/jelanilyles/Research/ParticleSimulator/Partilce_Simulator/main.cpp</file>
+            <file>file:/Users/jelanilyles/Research/ParticleSimulator/Partilce_Simulator/GridBox.h</file>
         </group>
     </open-files>
 </project-private>

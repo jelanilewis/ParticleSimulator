@@ -4,6 +4,9 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>GridBox.h</itemPath>
+      <itemPath>GridPlane.h</itemPath>
+      <itemPath>GridRow.h</itemPath>
       <itemPath>Particle.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -13,6 +16,9 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>GridBox.cpp</itemPath>
+      <itemPath>GridPlane.cpp</itemPath>
+      <itemPath>GridRow.cpp</itemPath>
       <itemPath>Particle.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -38,6 +44,18 @@
       </toolsSet>
       <compileType>
       </compileType>
+      <item path="GridBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GridBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GridPlane.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GridPlane.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GridRow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GridRow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Particle.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Particle.h" ex="false" tool="3" flavor2="0">
@@ -65,6 +83,18 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="GridBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GridBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GridPlane.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GridPlane.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GridRow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GridRow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Particle.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Particle.h" ex="false" tool="3" flavor2="0">

@@ -16,8 +16,10 @@
 #include <array>
 #include <fstream>
 #include <string>
+#include <vector>
 #include "Particle.h"
-
+#include "GridBox.h"
+#include "GridRow.h"
 using namespace std;
 
 /*
@@ -35,6 +37,79 @@ void trim(string &s) {
  }
 
 
+void UpdateGridBoxesAndClose(vector<Particle> parts, vector<GridPlane> planes) {     //Tracks which particles are close to the subject particle based on the grid
+    
+    for(int i = 0; i < 10; i++) {
+        for(int j = 0; j < 10; j++) {
+            for(int m = 0; m < planes.size(); m++) {
+            
+                planes[m].rows[i].blocks[j].parts = {};
+        
+            }
+        }
+    }
+    
+    for(int q = 0; q < parts.size(); q++) {
+        
+        Particle p = parts[q];    
+                    
+        planes[p.zbox].rows[p.ybox].blocks[p.xbox].parts.push_back(p);
+    }
+    
+    bool one = false, two = false, three = false, four = false, five = false, six = false;
+    for(int q = 0; q < parts.size(); q++) {
+        
+        Particle p = parts[q];
+        
+        for(int i = 0; i < 10; i++) {
+            for(int j = 0; j < 10; j++) {
+                for(int m = 0; m < 10; m++) {
+               
+                    
+        
+                    if(abs(i - p.xbox) <= 1) {
+                        one = true;
+                    }
+         
+                    if(abs(i - p.xbox) = 9) {
+                        two = true;
+                    }
+                
+                    if(abs(j - p.ybox) <= 1) {
+                        three = true;
+                    }
+        
+                    if(abs(j - p.ybox) = 9) {
+                        four = true;
+                    }
+                
+                    if(abs(m - p.zbox) <= 1) {
+                        five = true;
+                    }
+                    
+                    if(abs(m - p.zbox) = 9) {
+                        six = true;
+                    }
+                            
+               
+        
+        
+                    if(one || two) {
+                        if(three || four) {
+                            if(five || six) {
+                    
+                                for(int l = 0; l < planes[m].rows[j].blocks[i].parts.size(); l++) {
+                                    p = planes[m].rows[j].blocks[i].parts.pop_back();
+                                    p.close.push_back(p);
+                                }
+                            }
+                        }
+                    }
+                }
+            }    
+        }
+    }   
+}
 
 
     
@@ -45,23 +120,54 @@ void trim(string &s) {
 int main(int argc, char** argv) {
     
     int numcells, numsteps;
-    double  velocity, std, k, limit, pw, ph;
+    double  velocity, mean, std, k, limit, pw, ph;
     vector<Particle> particles;
     Particle * p, q, r, c;
+    vector<GridPlane> planes;
     
-    
+    bool a1 = false, b2 = false, c3 = false, d4 = false;
     
     
     
     string filename, filename1, filename2;
-    int choice;
+    int choice = 0;
     
     
-    cout << "Input simulation type" << endl;
-    cout << "1. Repulsion" << endl;
-    cout << "2. Attraction" << endl;
-    cout << "3. Angular Attraction" << endl;
+    cout << "Repulsion? Enter 1. Attraction? Enter 2. Neither? Enter 0." << endl;
     cin >> choice;
+    if(choice == 1) {
+        a1 = true;
+        b2 = true;
+    }     
+    if(choice == 2) {
+        a1 = true;
+        b2 = false;
+    }
+    if(choice = 0) {
+        a1 = false;
+    }
+    
+    choice = 0;
+    
+    cout << "Angular Attraction? Enter 1. Repulsion? Enter 2. Neither? Enter 0." << endl;
+    cin >> choice;
+    if(choice == 1) {
+        c3 = true;
+        d4 = true;
+    }
+    if(choice == 2) {
+        c3 = true;
+        d4 = false;
+    }
+    if(choice = 0) {
+        c3 = false;
+    }
+    
+    if(a1 == 0 && c3 == 0) {
+        cout << "No intermolecular forces." << endl;
+    }
+    
+    
     
     cout << "Input filename" << endl;
     cin >> filename;
@@ -80,6 +186,9 @@ int main(int argc, char** argv) {
     
     cout << "Input velocity" << endl;
     cin >> velocity;
+    
+    cout << "Input mean/flow" << endl;
+    cin >> mean;
     
     cout << "Input Standard Deviation" << endl;
     cin >> std;
@@ -125,7 +234,7 @@ int main(int argc, char** argv) {
     
     
     
-    file << "num/xpos/ypos/xpos0/ypos0/dx/dy/dxbox/dybox/xbox/ybox/velocity/theta/velx/vely/dr" << endl;
+    file << "num/xpos/ypos/zpos/xpos0/ypos0/zpos0/dx/dy/dz/dxbox/dybox/dzbox/xbox/ybox/zbox/velocity/velx/vely/velz/theta/beta/dr" << endl;
     
     string output1;
     
@@ -133,39 +242,34 @@ int main(int argc, char** argv) {
         
         double sd = 0;
         
+        UpdateGridBoxesAndClose(particles, planes);
+        
         for(int i = 0; i < numcells; i++) {
             
             p = &particles[i];
             
             string output;
             
-            output = std::to_string(p->num) + " ";
+            output = std::to_string(p->num) + " ";           
+            output += to_string(p->posx) + " " + to_string(p->posy) + " " + to_string(p->posz) + " ";
+            output += to_string(p->posx0) + " " + to_string(p->posy0) + " " + to_string(p->posz0) + " "; 
+            output += to_string(p->dx) + " " + to_string(p->dy) + " " + to_string(p->dz) + " ";
+            output += to_string(p->dxbox) + " " + to_string(p->dybox) + " " + to_string(p->dzbox) + " ";
+            output += to_string(p->xbox) + " " + to_string(p->ybox) + " " + to_string(p->zbox) + " ";
+            output += to_string(p->velocity) + " " + to_string(p->velx) + " " + to_string(p->vely) + " " + to_string(p->velz) + " ";
+            output += to_string(p->theta) + " " to_string(p->beta);
             
             
-            output += std::to_string(p->posx) + " " + std::to_string(p->posy) + " ";
-            p->UpdatePosition();
-            output += std::to_string(p->posx0) + " " + std::to_string(p->posy0) + " "; 
-            output += std::to_string(p->dx) + " " + std::to_string(p->dy) + " ";
-            output += std::to_string(p->dxbox) + " " + std::to_string(p->dybox) + " ";
             
-            
-            output += std::to_string(p->xbox) + " " + std::to_string(p->ybox) + " ";
-            p->UpdateGridBox();
-            
-            
-            output += std::to_string(p->velocity) + " " + std::to_string(p->velx) + " " + to_string(p->vely) + " ";
-            p->UpdateVelocity(choice);
-            
-            output += std::to_string(p->theta) + " ";
-            p->UpdateTheta(choice);
-            
-            
-            output += std::to_string(p->dr);
-            p->UpdateDR();  
+      
+              
             
             file << output << endl;
             
-            sd += (p->dx)*(p->dx) + (p->dy)*(p->dy); 
+            
+            sd += (p->dx)*(p->dx) + (p->dy)*(p->dy) + (p->dz)*(p->dz); 
+            
+            p->Update(a1, b2, c3, d4, particles, planes, mean, std);
              
         } 
         
@@ -174,7 +278,6 @@ int main(int argc, char** argv) {
         for(int i = 0; i < numcells; i++) {
             
             c = particles[i];
-            c.UpdateClose(particles);
             string output3;
             
             for(int i = 0; i < c.close.size(); i++) {
@@ -212,7 +315,7 @@ int main(int argc, char** argv) {
 //    
     
     
-////    TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST
+////TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST
 ////TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST
     
 //    fstream testfile;
@@ -266,8 +369,7 @@ int main(int argc, char** argv) {
 //    
     
 ////TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST
-////TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST
-////    
+////TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST//TEST TEST TEST TEST TEST TEST TEST    
     
     
     

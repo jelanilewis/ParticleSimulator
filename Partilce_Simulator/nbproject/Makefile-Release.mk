@@ -35,6 +35,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/GridBox.o \
+	${OBJECTDIR}/GridPlane.o \
+	${OBJECTDIR}/GridRow.o \
 	${OBJECTDIR}/Particle.o \
 	${OBJECTDIR}/main.o
 
@@ -62,6 +65,21 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/partilce_simulator: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/partilce_simulator ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/GridBox.o: GridBox.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/GridBox.o GridBox.cpp
+
+${OBJECTDIR}/GridPlane.o: GridPlane.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/GridPlane.o GridPlane.cpp
+
+${OBJECTDIR}/GridRow.o: GridRow.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/GridRow.o GridRow.cpp
 
 ${OBJECTDIR}/Particle.o: Particle.cpp
 	${MKDIR} -p ${OBJECTDIR}

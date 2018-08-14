@@ -10,9 +10,13 @@
  *
  * Created on June 5, 2018, 11:19 AM
  */
-#include <vector>
+
+
 #ifndef PARTICLE_H
 #define PARTICLE_H
+
+#include <vector>
+
 using namespace std;
 
 
@@ -20,43 +24,27 @@ class Particle
 {
 public:
     Particle();
-    Particle(double vel, double std, int num, double k, double limit, double pw, double ph);
-    Particle(double x, double y, int num, int std);
-    void UpdatePosition();
-    void UpdateVelocity(int c);
-    void UpdateTheta(int c);
-    void UpdateDR();
+    Particle(double vel, double std, int num, double k, double limit, double pw, double ph);    //Particle init
+    Particle(double x, double y, int num, int std);                                             //Test particle init    
+    void Update(bool f1, bool f2, bool f3, bool f4, vector<Particle> &parts, vector<GridPlane> planes, double mean, double stddv, int pw, int ph, int pd);                                                                      //updates position variables                                                                 //updates velocity variables                                                                    //updates theta
+    void UpdateDR();                                                                            // updates dr
     void UpdateGridBox();
-    void CheckClose(vector<Particle> &parts);
-    double CheckEnergy(Particle p);
-    double Radius(Particle p);
-    double FindTheta(Particle p);
-    bool RadiusCheck(Particle p);
-    double CalcRepulsionX();
-    double CalcRepulsionY();
-    double FindXForce(Particle p);
-    double FindYForce(Particle p);
-    double FindAlignmentForce(Particle p);
-    double CalcAlignment();
-    double FindNetXForce(vector<Particle> &parts);
-    double FindNetYForce(vector<Particle> &parts);
-    void UpdateClose(vector<Particle> &parts);
     double GGen(double mean, double stddv);
     
-    int num;
-    int panewidth;
+    int num;                                            //Identifier
+    int panewidth;                                      //Space parameters
     int paneheight;
-    double limitdistance;
-    double posx, posy, posx0, posy0, dx, dy;
-    int dxbox;
-    int dybox;
-    double velocity, velx, vely;
-    double theta;
-    double dr;
-    double stddev;
-    double sd;
-    int xbox, ybox;
-    double k;
+    int panedepth;
+    double limitdistance;                               //limit of the distance for which the forces of interaction will take effect 
+    double posx, posy, posz, posx0, posy0, posz0, dx, dy, dz;            //position variables, originals position variables, displacement variables
+    int dxbox, dybox, dzbox;                                          //particle to box displacement variables
+    double velocity, velx, vely, velz, vel0;                        //velocity variables   
+    double theta, beta;                                       //angle variable
+    double dr;                                          //random factor variable
+    double stddev;                                      // standard deviation for random number generator
+    double sd;                                          // squared displacement variable
+    int xbox, ybox, zbox;                                     //grid position variable
+    double k;                                           // the constant of the strength of the interacting forces
     vector<Particle> close;
 };
 
